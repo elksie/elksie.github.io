@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="rewordscapes.css">
+        <meta charset="utf-8">
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="rewordscapes.js"></script>
+        
+    </head>
+    <body>
+        <h1>rewordscapes!</h1>
+        <div class="flex-container">
+            <div class = "flex-container" style = "flex-basis: 55%;">
+                <div class = "newFlex" style = "flex-basis: 40%;">
+                    <table id="puzzle">
+                        <tr>
+                            <td id = "0, 0" ondrop="drop(event)" ondragover="allowDrop(event)" onclick = "findWordStart(event, this.id)"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div> 
+                    <div class = "flex-container">
+                        <div class = "flex-child">
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                A
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                B
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                C
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                D
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                E
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                F
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                G
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                H
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                I
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                J
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                K
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                L
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                M
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                N
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                O
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                P
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                Q
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                R
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                S
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                T
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                U
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                V
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                W
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                X
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                Y
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)">
+                                Z
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)" innerHTML = " ">
+                                
+                            </div>
+                            <div class = "letterbox" draggable="true" ondragstart="drag(event)" style = "background-color:#bfd1b0">
+
+                            </div>
+                        </div>
+                    </div>
+                        <input type="button" id="growRow" onClick="growRow()" value = "Add Row">
+                        <input class = "button" type="button" id="growCol" onClick="growCol()" value = "Add Column">
+                        <input class = "button" type="button" id="shrinkRow" onClick="shrinkRow()" value = "Remove Row">
+                        <input class = "button" type="button" id="shrinkCol" onClick="shrinkCol()" value = "Remove Column">
+                        <input class = "button" type="button" id="clearGrid" onClick="clearGrid()" value="Clear Grid">
+                       
+                            <h2 style="line-height: 35px">Build-a-Puzzle Instructions:</h2>
+                            <p> Click the "Add Row" or "Add Column" buttons to expand the puzzle grid. Click on a box to start the typing menu. 
+                                Type a letter to add it to the highlighted box, or use the arrow keys to change your selection. Clear boxes with backspace. To exit the typing menu, hit escape.
+                                To narrow down the possible words, you can input the letter bank in the field labelled "Letter Bank." Finally, click on a word to see possible hints.
+                            </p>
+                        
+                </div>
+                
+                
+            </div>
+            <div>
+                
+                
+                <div class = "flex-container-vert">
+                    <div>
+                        Word Length: <input type="number" id="wordLength"><br>
+                    </div>
+                    <div>
+                        Known Letters: <input type="text" id="knownLetters" placeholder=""><br>
+                    </div>
+                    <div>
+                        Letter Bank: <input type="text" id="letterBank" placeholder=""><br>
+                    </div>
+                    <div>
+                        <input type="file" id="input" placeholder=0>
+                        
+                    </div>
+                    <div>
+                        <input class="check" type="checkbox" id="synonym" placeholder=false>Synonym
+                    </div>
+                    <div>
+                        <input class="check" type="checkbox" id="definition" placeholder=false>Definition
+                    </div>
+                    <div>
+                        <input type="button" id = "submitButton" onClick = "handleFiles(document.getElementById('wordLength').value, document.getElementById('knownLetters').value.toLowerCase(), document.getElementById('letterBank').value + ' '.toLowerCase())" value="Submit">
+                    </div>
+                </div>
+                <div class = "textbox">
+                    <h2>Hints:</h2>
+                    <p id="answers">Words that fit your description: <br> </p>
+                </div>
+            </div>
+            
+          </div>
+          <div class = "textbox">
+            
+            <h2>Text Input Instructions:</h2>
+            <p>
+                Type the length of word you are trying to find in the "Word Length" box. If you know any letters in the word, 
+                type them in the "Known Letters" box with a space denoting empty squares. Type the available letters into the 
+                "Letter Bank" box. Select the type of hint you would like to recieve with the checkboxes. Finally, click "Submit" to see all possible answers.
+            </p>
+        </div>
+    </body>
+</html>
