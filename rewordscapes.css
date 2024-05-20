@@ -1,0 +1,167 @@
+img {
+    display: block;
+    margin: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+
+.button {
+    margin-top: 5px;
+}
+
+.topnav {
+    background-color:#6aa84f;
+    overflow:hidden;
+}
+
+.topnav a{
+    float: left;
+    color: whitesmoke;
+    text-align: center;
+    padding: 14px 16px;
+    font-size: 17px;
+    font-family: Helvetica;
+}
+h1 {
+    font-family: cursive;
+    text-align: center;
+    -webkit-text-fill-color: whitesmoke;
+    margin-top: 10px;
+    scale: 1.3
+}
+
+.topnav a:hover {
+    background-color:#a6e08d;
+    color: #508538;
+}
+
+.topnav a.active {
+    background-color:#508538;
+    color: whitesmoke;
+}
+
+h2 {
+    font-family: Helvetica;
+    
+}
+
+body {
+    margin: 0;
+    font-family: Helvetica;
+    background-color: #629460;
+}
+
+p {
+    font-size: 14px;
+    font-family: Helvetica;
+}
+
+
+.flex-container {
+    display: flex;
+    height: auto;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content:space-evenly;
+    background-color: #629460;
+  }
+
+.flex-container > div {
+    margin: 10px;
+    line-height: 20px;
+    font-size: 20px;
+    background-color: #96BE8C;
+    flex-grow: 1;
+    flex: 1;
+}
+
+.textbox {
+    background-color:#96BE8C;
+    margin: 10px;
+    padding: 15px;
+}
+
+.flex-container-vert {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.flex-container-vert > div {
+    margin: 10px;
+    text-align: start;
+    line-height: 40px;
+    font-size: 30px;
+}
+
+.check {
+    margin-right: 10px;
+    margin-bottom: 8px;
+    vertical-align: middle;
+}
+
+
+.letter-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px;
+    justify-content: center;
+    align-items: middle;
+    vertical-align: middle;
+}
+
+.letterbox {
+    flex-wrap: wrap;
+    display: flex;
+    width: 50px;
+    height: 50px;
+    aspect-ratio: 1/1;
+    background-color: white;
+    margin: 5px;
+    justify-content: center;
+    align-content: center;
+    font-size: 200%;
+    font-weight: bold;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    cursor: move;
+    
+}
+
+table {
+    border: 1px solid black;
+    margin: 25px;
+    background-color:#508538;
+}
+
+td {
+    border: 1px solid black;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    vertical-align: center;
+    background-color:#bfd1b0;
+    font-size:20px;
+    font-weight: bolder;
+
+
+
+}
+
+
+
+.flex-child {
+    display: flex;
+    align-content:baseline;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 50px;
+    
+}
+
+.newFlex {
+    overflow: auto;
+    display: block;
+}
+
