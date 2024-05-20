@@ -87,7 +87,7 @@ function handleFiles(wordLength, knownLetters, letterBank) {
         output.innerHTML = 'Words that fit your description:<br>';
 
         const reader = new FileReader();
-        reader.readAsText(file.files[0]); //reads dictionary as text
+        reader.readAsText(dictionary.txt); //reads dictionary as text
 
         //when dictonary is loaded do below
         reader.onload = function() { 
