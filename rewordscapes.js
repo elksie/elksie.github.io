@@ -85,61 +85,72 @@ function handleFiles(wordLength, knownLetters, letterBank) {
     } else {
         //reset header on second run of code
         output.innerHTML = 'Words that fit your description:<br>';
+        let options = { //set method to execue on fetch
+            method:'GET',
+        }
+        fetch ("https://raw.githubusercontent.com/elksie/elksie.github.io/main/dictionary.txt", options)
+            .then(res => res.blob())
+            .then(res => {
+                const reader = new FileReader();
+                reader.readAsText(res); //reads dictionary as text
 
-        const reader = new FileReader();
-        reader.readAsText(dictionary.txt); //reads dictionary as text
-
-        //when dictonary is loaded do below
-        reader.onload = function() { 
-            let allLines = reader.result.split(/\s+/); //split file by whitespace
-            let printed = false;
-            //parse through every line one by one
-            allLines.forEach((line) => { 
-                let print = true;
-                if (line.length == wordLength ) {
-                    //word lengths match
-                    //iterates through length of given word
-                    for (let i = 0; i < wordLength; i++) { 
-                        if (line.charAt(i) != knownLetters.charAt(i) && knownLetters.charAt(i) != ' ') { 
-                            //letter of line and knownLetters is not matching or blank
-                            print = false; 
-                            console.log("letter check")
-                            break;
-                        }
-                    }
-
-                    let chars = makeBank(line);
-
-                    //check for word having more of a letter than the letter bank
-                    if (letterBank != 'abcdefghijklmnopqrstuvwxyz ') {
-                        chars.forEach (function(value, key) {
-                            if (key != ' ') {
-                                if (value > bankChars.get(key) || !(String(letterBank).includes(key))) {
-                                    print = false;
-                     
+                //when dictonary is loaded do below
+                reader.onload = function() { 
+                    let allLines = reader.result.split(/\s+/); //split file by whitespace
+                    let printed = false;
+                    //parse through every line one by one
+                    allLines.forEach((line) => { 
+                        let print = true;
+                        if (line.length == wordLength ) {
+                            //word lengths match
+                            //iterates through length of given word
+                            for (let i = 0; i < wordLength; i++) { 
+                                if (line.charAt(i) != knownLetters.charAt(i) && knownLetters.charAt(i) != ' ') { 
+                                    //letter of line and knownLetters is not matching or blank
+                                    print = false; 
+                                    console.log("letter check")
+                                    break;
                                 }
                             }
+
+                            let chars = makeBank(line);
+
+                            //check for word having more of a letter than the letter bank
+                            if (letterBank != 'abcdefghijklmnopqrstuvwxyz ') {
+                                chars.forEach (function(value, key) {
+                                    if (key != ' ') {
+                                        if (value > bankChars.get(key) || !(String(letterBank).includes(key))) {
+                                            print = false;
+                     
+                                        }
+                                    }
                             
-                        })
-                    }
+                                })
+                            }
                     
 
-                    if (print) { 
-                        //all requirements met
-                        printed = true;
-                        wordsPossible[wordsPossible.length] = line;
-                    } 
+                            if (print) { 
+                                //all requirements met
+                                printed = true;
+                                wordsPossible[wordsPossible.length] = line;
+                            } 
+                        }
+                    })
+                    let wordSelect = Math.floor(Math.random() * wordsPossible.length);
+                    console.log(wordsPossible);
+                    console.log(wordsPossible[wordSelect]);
+                    findHint(wordsPossible[wordSelect]);
+                    if (!printed) {
+                        console.log("print check")
+                        output.innerHTML += "Invalid Input!";
+                    }
                 }
             })
-            let wordSelect = Math.floor(Math.random() * wordsPossible.length);
-            console.log(wordsPossible);
-            console.log(wordsPossible[wordSelect]);
-            findHint(wordsPossible[wordSelect]);
-            if (!printed) {
-                console.log("print check")
-                output.innerHTML += "Invalid Input!";
-            }
-        }
+            .catch(err => {
+                console.log(err);
+            })
+        
+        
         
     }
 
