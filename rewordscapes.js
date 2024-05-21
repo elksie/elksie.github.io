@@ -81,7 +81,7 @@ function handleFiles(wordLength, knownLetters, letterBank) {
     if (end || wordLength < 3 || wordLength > 7 || knownLetters.length != wordLength || (letterBank.length > 8 && letterBank != 'abcdefghijklmnopqrstuvwxyz ')) {
         //input is not valid
         console.log('input check');
-        output.innerHTML += "Invalid Input!<br>";
+        output.innerHTML = "Words that fit your description: <br> <li> Invalid Input!<br>";
     } else {
         //reset header on second run of code
         output.innerHTML = 'Words that fit your description:<br>';
@@ -142,7 +142,7 @@ function handleFiles(wordLength, knownLetters, letterBank) {
                     findHint(wordsPossible[wordSelect]);
                     if (!printed) {
                         console.log("print check")
-                        output.innerHTML += "Invalid Input!";
+                        output.innerHTML = "Words that fit your description: <br> <li> Invalid Input!<br>";
                     }
                 }
             })
@@ -314,7 +314,7 @@ async function typeLetter(x, y) {
                     tabRows[y].cells[x].innerHTML = response.toUpperCase();
                 } else if (response =="Backspace" || response == "Delete") {
                     tabRows[y].cells[x].innerHTML = "";
-                } else if (response.includes("Arrow") || response == "Escape") {
+                } else if (response.includes("Arrow")) {
                     stay = false;
                     if (response == "ArrowLeft" && x - 1 >= 0) {
                         typeLetter(Number(x) - 1, y);
@@ -324,14 +324,14 @@ async function typeLetter(x, y) {
                         typeLetter(x, Number(y) - 1);
                     } else if ((response == "ArrowDown" || response == "Enter")&& Number(y) + 1 < tabRows.length) {
                         typeLetter(x, Number(y) + 1);
-                    } else {
-                        stay = true;
-                    }
+                    } 
                 } else {
                     stay = false;
                 }
                 if (tabRows[y].cells[x].innerHTML == "") {
                     tabRows[y].cells[x].style.backgroundColor = "";
+                } else if (response == " "){
+                    tabRows[y].cells[x].style.backgroundColor = "#FFFFFF";
                 } else {
                     tabRows[y].cells[x].style.backgroundColor = "#FFFFFF";
                 }
