@@ -322,7 +322,7 @@ async function typeLetter(x, y) {
                         typeLetter(Number(x) + 1, y);
                     } else if (response == "ArrowUp" && y - 1 >= 0) {
                         typeLetter(x, Number(y) - 1);
-                    } else if ((response == "ArrowDown" || response == "Enter")&& Number(y) + 1 < tabRows.length) {
+                    } else if ((response == "ArrowDown") && Number(y) + 1 < tabRows.length) {
                         typeLetter(x, Number(y) + 1);
                     } 
                 } else {
