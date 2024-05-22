@@ -1,17 +1,15 @@
-//test function to test if onClick() elements respond
-function myFunction() { //test function
-    return "YOU CLICKED ME!";
-}
-
+//drop handler
 function allowDrop(ev) {
     ev.preventDefault();
 }
 
+//drag handler, set data to be transfered
 function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.innerText);
     ev.dataTransfer.setData("color", ev.target.style.backgroundColor);
 }
 
+//drop handler, transfer data to grid square
 function drop(ev) {
     ev.preventDefault();
     let data = ev.dataTransfer.getData("text");
@@ -22,24 +20,24 @@ function drop(ev) {
     } else {
         ev.target.style.backgroundColor = "";
     }
-    
 }
 
+//Add a row to right of the grid
 function growRow() {
     let x = document.getElementById("puzzle");
     let newRow = x.insertRow();
     for (let i = 0; i < x.rows[0].cells.length; i++) {
         x.rows[x.rows.length-1].innerHTML += "<td id=\"" + [i] + ", " + (x.rows.length - 1) + "\"ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\" onclick = \"findWordStart(event, this.id)\"></td>";
     }
-    
-
 }
 
+//Remove a row from the right of the grid
 function shrinkRow() {
     let x = document.getElementById("puzzle");
     x.deleteRow(x.rows.length - 1);
 }
 
+//add a column at the bottom of the grid
 function growCol() {
     let x = document.getElementById("puzzle").rows;
     for (let i = 0; i < x.length; i++) {
@@ -47,6 +45,7 @@ function growCol() {
     }
 }
 
+//remove a column from the bottom of the grid
 function shrinkCol() {
     let x = document.getElementById("puzzle");
     for (let i = 0; i < x.rows.length; i++) {
@@ -127,7 +126,6 @@ function handleFiles(wordLength, knownLetters, letterBank) {
                             
                                 })
                             }
-                    
 
                             if (print) { 
                                 //all requirements met
@@ -158,7 +156,6 @@ function handleFiles(wordLength, knownLetters, letterBank) {
 
 //make letter bank with given string
 function makeBank(line) {
-    
     const chars = new Map();
     for (let i = 0; i < line.length; i++) {
         if (chars.has(line.charAt(i))) {
@@ -199,11 +196,8 @@ function findHint(line) {
             let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
             if (data[0].meanings[ranMeaning].synonyms[ranNum] != undefined) {
                 synString= "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>"; //print random synonym
-            }
-                
+            }       
              
-
-            
             //only definition box checked
             let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
             let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
@@ -309,7 +303,6 @@ async function typeLetter(x, y) {
                 console.log(response);
                 let stay = true;
             
-            
                 if ('abcdefghijklmnopqrstuvwxyx '.includes(response.toLowerCase()) && tabRows[y].cells[x].style.backgroundColor == "rgb(255, 114, 118)") {
                     tabRows[y].cells[x].innerHTML = response.toUpperCase();
                 } else if (response =="Backspace" || response == "Delete") {
@@ -322,9 +315,11 @@ async function typeLetter(x, y) {
                         typeLetter(Number(x) + 1, y);
                     } else if (response == "ArrowUp" && y - 1 >= 0) {
                         typeLetter(x, Number(y) - 1);
-                    } else if ((response == "ArrowDown") && Number(y) + 1 < tabRows.length) {
+                    } else if ((response == "ArrowDown")&& Number(y) + 1 < tabRows.length) {
                         typeLetter(x, Number(y) + 1);
-                    } 
+                    } else {
+                        stay = true;
+                    }
                 } else {
                     stay = false;
                 }
@@ -335,14 +330,10 @@ async function typeLetter(x, y) {
                 } else {
                     tabRows[y].cells[x].style.backgroundColor = "#FFFFFF";
                 }
-            
-            
 
                 if (stay) {             
                     typeLetter(x, y);
                 }
-
-
             
             }, function(error) {
                 console.error("failed", error);
