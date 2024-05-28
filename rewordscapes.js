@@ -53,6 +53,10 @@ function shrinkCol() {
     }
 }
 
+{
+    var run = true;
+}
+
 //test function to test values in a map
 function mapPrint(value, key, map) {
     console.log(key + " = " + value);
@@ -297,47 +301,50 @@ async function typeLetter(x, y) {
     
         let tabRows = document.getElementById("puzzle").rows;
             tabRows[y].cells[x].style.backgroundColor = "#FF7276";
-        
-            keypress().then(function(response) {
-                console.log("here");
-                console.log(response);
-                let stay = true;
             
-                if ('abcdefghijklmnopqrstuvwxyx '.includes(response.toLowerCase()) && tabRows[y].cells[x].style.backgroundColor == "rgb(255, 114, 118)") {
-                    tabRows[y].cells[x].innerHTML = response.toUpperCase();
-                } else if (response =="Backspace" || response == "Delete") {
-                    tabRows[y].cells[x].innerHTML = "";
-                } else if (response.includes("Arrow")) {
-                    stay = false;
-                    if (response == "ArrowLeft" && x - 1 >= 0) {
-                        typeLetter(Number(x) - 1, y);
-                    } else if (response == "ArrowRight" && Number(x) + 1 < tabRows[0].cells.length) {
-                        typeLetter(Number(x) + 1, y);
-                    } else if (response == "ArrowUp" && y - 1 >= 0) {
-                        typeLetter(x, Number(y) - 1);
-                    } else if ((response == "ArrowDown")&& Number(y) + 1 < tabRows.length) {
-                        typeLetter(x, Number(y) + 1);
+                keypress().then(function(response) {
+                    console.log("here");
+                    console.log(response);
+                    let stay = true;
+                
+                    if ('abcdefghijklmnopqrstuvwxyx '.includes(response.toLowerCase()) && tabRows[y].cells[x].style.backgroundColor == "rgb(255, 114, 118)") {
+                        tabRows[y].cells[x].innerHTML = response.toUpperCase();
+                    } else if (response =="Backspace" || response == "Delete") {
+                        tabRows[y].cells[x].innerHTML = "";
+                    } else if (response.includes("Arrow")) {
+                        stay = false;
+                        if (response == "ArrowLeft" && x - 1 >= 0) {
+                            typeLetter(Number(x) - 1, y);
+                        } else if (response == "ArrowRight" && Number(x) + 1 < tabRows[0].cells.length) {
+                            typeLetter(Number(x) + 1, y);
+                        } else if (response == "ArrowUp" && y - 1 >= 0) {
+                            typeLetter(x, Number(y) - 1);
+                        } else if ((response == "ArrowDown")&& Number(y) + 1 < tabRows.length) {
+                            typeLetter(x, Number(y) + 1);
+                        } else {
+                            stay = true;
+                        }
                     } else {
-                        stay = true;
+                        stay = false;
                     }
-                } else {
-                    stay = false;
-                }
-                if (tabRows[y].cells[x].innerHTML == "") {
-                    tabRows[y].cells[x].style.backgroundColor = "";
-                } else if (response == " "){
-                    tabRows[y].cells[x].style.backgroundColor = "#FFFFFF";
-                } else {
-                    tabRows[y].cells[x].style.backgroundColor = "#FFFFFF";
-                }
-
-                if (stay) {             
-                    typeLetter(x, y);
-                }
+                    if (tabRows[y].cells[x].innerHTML == "") {
+                        tabRows[y].cells[x].style.backgroundColor = "";
+                    } else if (response == " "){
+                        tabRows[y].cells[x].style.backgroundColor = "#FFFFFF";
+                    } else {
+                        tabRows[y].cells[x].style.backgroundColor = "#FFFFFF";
+                    }
+    
+                    if (stay) {             
+                        typeLetter(x, y);
+                    }
+                
+                }, function(error) {
+                    console.error("failed", error);
+                })
             
-            }, function(error) {
-                console.error("failed", error);
-            })
+        
+            
 
         
 }
@@ -345,6 +352,8 @@ async function typeLetter(x, y) {
 {
     var squareClicked = false;
 }
+
+
 
 function keypress() {
     return new Promise((res) => {
@@ -382,7 +391,7 @@ function findWordStart(event, id) {
         let intersectX = Number(!isEmpty(Number(x) - 1, y) + !isEmpty(Number(x) + 1, y));
         let intersectY = Number(!isEmpty(x, Number(y) - 1) + !isEmpty(x, Number(y) + 1));
         let intersect = intersectX + intersectY;
-        if ((intersect == 2 && (intersectX != 2 && intersectY != 2)) || intersect == 3) {
+        if ((intersect == 2 && (intersectX != 2 && intersectY != 2)) || intersect >= 3) {
             if (toggleXY2) {
                 startY = y;
             } else {
