@@ -1,44 +1,17 @@
-img {
-    display: block;
-    margin: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 30%;
-}
-
+/*Elisa Reed
+Advanced Programming Topics
+06/10/2024
+Rewordscapes Stylesheet*/
 .button {
     margin-top: 5px;
 }
 
-.topnav {
-    background-color:#6aa84f;
-    overflow:hidden;
-}
-
-.topnav a{
-    float: left;
-    color: whitesmoke;
-    text-align: center;
-    padding: 14px 16px;
-    font-size: 17px;
-    font-family: Helvetica;
-}
 h1 {
     font-family: cursive;
     text-align: center;
     -webkit-text-fill-color: whitesmoke;
     margin-top: 10px;
     scale: 1.3
-}
-
-.topnav a:hover {
-    background-color:#a6e08d;
-    color: #508538;
-}
-
-.topnav a.active {
-    background-color:#508538;
-    color: whitesmoke;
 }
 
 h2 {
@@ -102,16 +75,6 @@ p {
     vertical-align: middle;
 }
 
-
-.letter-container {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 10px;
-    justify-content: center;
-    align-items: middle;
-    vertical-align: middle;
-}
-
 .letterbox {
     flex-wrap: wrap;
     display: flex;
@@ -144,9 +107,6 @@ td {
     background-color:#bfd1b0;
     font-size:20px;
     font-weight: bolder;
-
-
-
 }
 
 

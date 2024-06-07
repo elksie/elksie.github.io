@@ -1,3 +1,12 @@
+/*Elisa Reed
+Advanced Programming Topics
+06/10/2024
+Rewordscapes Script
+
+Main code and behavior handling for rewordscapes website. contains all methods
+to find, highlight, and fetch definitions/synonyms for words. controls behavior 
+of html elements in rewordscapes.html.*/
+
 //drop handler
 function allowDrop(ev) {
     ev.preventDefault();
@@ -16,56 +25,59 @@ function drop(ev) {
     ev.target.innerHTML = data;
     let color = ev.dataTransfer.getData("color");
     if (color == "") {
+        //if blank set color to white
         ev.target.style.backgroundColor = "#FFFFFF";
     } else {
+        //else clear color
         ev.target.style.backgroundColor = "";
     }
 }
 
 //Add a row to right of the grid
 function growRow() {
-    let x = document.getElementById("puzzle");
-    let newRow = x.insertRow();
-    for (let i = 0; i < x.rows[0].cells.length; i++) {
-        x.rows[x.rows.length-1].innerHTML += "<td id=\"" + [i] + ", " + (x.rows.length - 1) + "\"ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\" onclick = \"findWordStart(event, this.id)\"></td>";
+    let grid = document.getElementById("puzzle");
+    if (grid.rows.length < 50) {
+        let newRow = grid.insertRow();
+        for (let i = 0; i < grid.rows[0].cells.length; i++) {
+            grid.rows[grid.rows.length-1].innerHTML += "<td id=\"" + [i] + ", " + 
+            (grid.rows.length - 1) + "\"ondrop=\"drop(event)\"" + 
+            "ondragover=\"allowDrop(event)\" onclick =" +  
+            "\"findWordStart(event, this.id)\"></td>";
+        }
     }
+    
 }
 
 //Remove a row from the right of the grid
 function shrinkRow() {
-    let x = document.getElementById("puzzle");
-    x.deleteRow(x.rows.length - 1);
+    let grid = document.getElementById("puzzle");
+    grid.deleteRow(grid.rows.length - 1);
 }
 
 //add a column at the bottom of the grid
 function growCol() {
-    let x = document.getElementById("puzzle").rows;
-    for (let i = 0; i < x.length; i++) {
-        x[i].innerHTML += "<td id=\"" + x[i].cells.length + ", " + [i] +  "\"<td ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"onclick = \"findWordStart(event, this.id)\"></td>";
+    let grid = document.getElementById("puzzle").rows;
+    if (grid[0].cells.length < 50) {
+        for (let i = 0; i < grid.length; i++) {
+            grid[i].innerHTML += "<td id=\"" + grid[i].cells.length + ", " + [i] +  
+            "\"<td ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"onclick =" + 
+            "\"findWordStart(event, this.id)\"></td>";
+        }
     }
+    
 }
 
 //remove a column from the bottom of the grid
 function shrinkCol() {
-    let x = document.getElementById("puzzle");
-    for (let i = 0; i < x.rows.length; i++) {
-        x.rows[i].deleteCell(x.rows[i].cells.length-1);
+    let grid = document.getElementById("puzzle");
+    for (let i = 0; i < grid.rows.length; i++) {
+        grid.rows[i].deleteCell(grid.rows[i].cells.length-1);
     }
-}
-
-{
-    var run = true;
-}
-
-//test function to test values in a map
-function mapPrint(value, key, map) {
-    console.log(key + " = " + value);
 }
 
 //use input and given dictionary to create list of permitted words
 function handleFiles(wordLength, knownLetters, letterBank) {
     const bankChars = makeBank(letterBank); //make letter bank into map with keys and counts
-    const file = document.getElementById('input'); //dictionary file
     const output = document.getElementById('answers'); //outputted list
     let end = false; //initialize variable for invalid inputs
     let wordsPossible = [];
@@ -74,24 +86,22 @@ function handleFiles(wordLength, knownLetters, letterBank) {
     for (let i = 0; i < knownLetters.length; i++) {
         if (!letterBank.includes(knownLetters.charAt(i))) {
             //letter bank does not have a letter in the word
-            console.log('bank 1 check');
             end = true;
             break;
-        }
-        
+        }  
     }
 
-    if (end || wordLength < 3 || wordLength > 7 || knownLetters.length != wordLength || (letterBank.length > 8 && letterBank != 'abcdefghijklmnopqrstuvwxyz ')) {
+    if (end || wordLength < 3 || wordLength > 7 || knownLetters.length != wordLength 
+        || (letterBank.length > 8 && letterBank != 'abcdefghijklmnopqrstuvwxyz ')) {
         //input is not valid
-        console.log('input check');
         output.innerHTML = "Words that fit your description: <br> <li> Invalid Input!<br>";
     } else {
         //reset header on second run of code
         output.innerHTML = 'Words that fit your description:<br>';
-        let options = { //set method to execue on fetch
+        let options = { //set method to execute on fetch
             method:'GET',
         }
-        fetch ("https://raw.githubusercontent.com/elksie/elksie.github.io/main/dictionary.txt", options)
+        fetch ("https://raw.githubusercontent.com/elksie/elksie.github.io/main/dictionary.txt", options) //wordscapes dictionary by gonzalezjo on github
             .then(res => res.blob())
             .then(res => {
                 const reader = new FileReader();
@@ -111,7 +121,6 @@ function handleFiles(wordLength, knownLetters, letterBank) {
                                 if (line.charAt(i) != knownLetters.charAt(i) && knownLetters.charAt(i) != ' ') { 
                                     //letter of line and knownLetters is not matching or blank
                                     print = false; 
-                                    console.log("letter check")
                                     break;
                                 }
                             }
@@ -138,22 +147,18 @@ function handleFiles(wordLength, knownLetters, letterBank) {
                             } 
                         }
                     })
-                    let wordSelect = Math.floor(Math.random() * wordsPossible.length);
-                    console.log(wordsPossible);
-                    console.log(wordsPossible[wordSelect]);
-                    findHint(wordsPossible[wordSelect]);
+                    let wordSelect = Math.floor(Math.random() * wordsPossible.length); //generate random number to select word
+                    findHint(wordsPossible[wordSelect]); //find a hint for chosen word
                     if (!printed) {
-                        console.log("print check")
+                        //if no words found
                         output.innerHTML = "Words that fit your description: <br> <li> Invalid Input!<br>";
                     }
                 }
             })
             .catch(err => {
+                //log error to console in case of fetch error
                 console.log(err);
             })
-        
-        
-        
     }
 
 }
@@ -177,10 +182,10 @@ function makeBank(line) {
 function findHint(line) {
     
     const output = document.getElementById('answers'); //output field
-    const synonymBoolean = document.getElementById('synonym').checked; //is synonym box checked
-    const definitionBoolean = document.getElementById('definition').checked; //is definition box checked
+    const synonymBoolean = Number(document.getElementById('synonym').checked); //is synonym box checked
+    const definitionBoolean = Number(document.getElementById('definition').checked); //is definition box checked
     
-    let url = 'https://api.dictionaryapi.dev/api/v2/entries/en/' + line; //url for api fetch
+    let url = 'https://api.dictionaryapi.dev/api/v2/entries/en/' + line; //api from https://dictionaryapi.dev/ by meetDeveloper
 
     let options = { //set method to execue on fetch
         method:'GET',
@@ -193,49 +198,51 @@ function findHint(line) {
             let synString = "";
             let defString = "";
             
-            //only synonym box checked
+            //generate random number for part of speech
             let meaningsNum = data[0].meanings.length;
             let ranMeaning = Math.floor(Math.random() * meaningsNum);
-            let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
-            let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
-            if (data[0].meanings[ranMeaning].synonyms[ranNum] != undefined) {
-                synString= "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>"; //print random synonym
-            }       
+
+            //generate synonym string
+            let wordFound = false;
+            while (!wordFound) {
+                let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
+                let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
+                if (data[0].meanings[ranMeaning].synonyms[ranNum] != undefined) {
+                    synString= "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
+                    wordFound = true;
+                } else {
+                    //re-roll meaning if no synonym found
+                    ranMeaning = Math.floor(Math.random() * meaningsNum);
+                }
+            }  
              
-            //only definition box checked
-            let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
-            let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
-            
-            if (data[0].meanings[ranMeaning].definitions[ranNum2] != undefined) {
-                defString= "<li>" + data[0].meanings[ranMeaning].definitions[ranNum2].definition + "<br>"; //print random definition
+            //generate definition string
+            wordFound = false;
+            while (!wordFound) {
+                let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
+                let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
+                if (data[0].meanings[ranMeaning].definitions[ranNum2] != undefined) {
+                    defString= "<li>" + data[0].meanings[ranMeaning].definitions[ranNum2].definition
+                    + "<br>"; //print random definition
+                    wordFound = true;
+                } else {
+                    //re-roll meaning if no definition found
+                    ranMeaning = Math.floor(Math.random() * meaningsNum);
+                }
             }
 
-            if (synonymBoolean) {
-                defString = "";
-            } else if (definitionBoolean) {
-                synString = "";
-            }
-            console.log("Boxes Checked: " + Number(synonymBoolean) + Number(definitionBoolean));
-
-            if (synonymBoolean + definitionBoolean == 1) {
-                //one box is checked
-                output.innerHTML += synString + defString;
-            } else {
-                if (length == 0) {
-                    output.innerHTML += defString;
-                } else if (length2 == 0) {
+            if(synonymBoolean && !definitionBoolean) { //synonym box checked
+                output.innerHTML += synString;
+            } else if (definitionBoolean && !synonymBoolean) { //definition box checked
+                output.innerHTML += defString;
+            } else { //both/no boxes checked
+                let ranType = Math.floor(Math.random() * (2)); //generate random number
+                if (ranType == 0) {
                     output.innerHTML += synString;
                 } else {
-                    let ranType = Math.floor(Math.random() * (2)); //generate random number
-                    if (ranType == 0) {
-                        output.innerHTML += synString;
-                    } else {
-                        output.innerHTML += defString;
-                    }
+                    output.innerHTML += defString;
                 }
-                
             }
-
             console.log(data);
         })
         .catch(err => {
@@ -244,7 +251,8 @@ function findHint(line) {
         });  
 }
 
-function clearGrid() {
+//clear puzzle grid to all blank squares
+function clearGrid() { 
     let tabRows = document.getElementById("puzzle").rows;
     for (let i = 0; i < tabRows.length; i++) {
         for (let j = 0; j < tabRows[0].cells.length; j++) {
@@ -254,12 +262,13 @@ function clearGrid() {
     }
 }
 
+//clear previously highlighted boxes to prepare for next highlighting
 function clearSelect() {
     let tabRows = document.getElementById("puzzle").rows;
     for (let i = 0; i < tabRows.length; i++) {
         for (let j = 0; j < tabRows[0].cells.length; j++) {
-            console.log(tabRows[i].cells[j].style.backgroundColor);
-            if (!isEmpty(j, i) && tabRows[i].cells[j].style.backgroundColor != "rgb(255, 114, 118)") {
+            if (!isEmpty(j, i) && tabRows[i].cells[j].style.backgroundColor != "rgb(255, 114, 118)") { 
+                //check for text and background color
                 tabRows[i].cells[j].style.backgroundColor = "#FFFFFF";
             } else {
                 tabRows[i].cells[j].style.backgroundColor = "";
@@ -268,14 +277,17 @@ function clearSelect() {
     }
 }
 
+//toggle variable for word highlighting
 {
     var toggleXY = false;
 }
 
+//additional toggle variable for word highlighting
 {
     var toggleXY2 = false;
 }
 
+//find starting Y coordinate for given click coord
 function findStartY(x, y) {
     let start = false;
     for (let i = 1; i <= y + 1; i++) {
@@ -286,6 +298,7 @@ function findStartY(x, y) {
     }
 }
 
+//find starting X coordinate for given click coord
 function findStartX(x, y) {
     let start = false;
     for (let i = 1; i <= x + 1; i++) {
@@ -297,101 +310,95 @@ function findStartX(x, y) {
     } 
 }
 
+//types a letter in the given square using user input asynchronously
 async function typeLetter(x, y) {
-    
-        let tabRows = document.getElementById("puzzle").rows;
-            tabRows[y].cells[x].style.backgroundColor = "#FF7276";
+    let tabRows = document.getElementById("puzzle").rows;
+    tabRows[y].cells[x].style.backgroundColor = "#FF7276"; //highlight selected box red
             
-                keypress().then(function(response) {
-                    console.log("here");
-                    console.log(response);
-                    let stay = true;
-                
-                    if ('abcdefghijklmnopqrstuvwxyx '.includes(response.toLowerCase()) && tabRows[y].cells[x].style.backgroundColor == "rgb(255, 114, 118)") {
-                        tabRows[y].cells[x].innerHTML = response.toUpperCase();
-                    } else if (response =="Backspace" || response == "Delete") {
-                        tabRows[y].cells[x].innerHTML = "";
-                    } else if (response.includes("Arrow")) {
-                        stay = false;
-                        if (response == "ArrowLeft" && x - 1 >= 0) {
-                            typeLetter(Number(x) - 1, y);
-                        } else if (response == "ArrowRight" && Number(x) + 1 < tabRows[0].cells.length) {
-                            typeLetter(Number(x) + 1, y);
-                        } else if (response == "ArrowUp" && y - 1 >= 0) {
-                            typeLetter(x, Number(y) - 1);
-                        } else if ((response == "ArrowDown")&& Number(y) + 1 < tabRows.length) {
-                            typeLetter(x, Number(y) + 1);
-                        } else {
-                            stay = true;
-                        }
-                    } else {
-                        stay = false;
-                    }
-                    if (tabRows[y].cells[x].innerHTML == "") {
-                        tabRows[y].cells[x].style.backgroundColor = "";
-                    } else if (response == " "){
-                        tabRows[y].cells[x].style.backgroundColor = "#FFFFFF";
-                    } else {
-                        tabRows[y].cells[x].style.backgroundColor = "#FFFFFF";
-                    }
-    
-                    if (stay) {             
-                        typeLetter(x, y);
-                    }
-                
-                }, function(error) {
-                    console.error("failed", error);
-                })
-            
-        
-            
+    //call keypress function and do something with response
+    keypress().then(function(response) { 
+        let stay = true;
+               
+        if ('abcdefghijklmnopqrstuvwxyx '.includes(response.toLowerCase())) { 
+            //if letter, type letter into box
+            tabRows[y].cells[x].innerHTML = response.toUpperCase(); 
+        } else if (response =="Backspace" || response == "Delete") {
+            //if delete, delete letter
+            tabRows[y].cells[x].innerHTML = "";
+        } else if (response.includes("Arrow")) {
+            //if arrow move from this box to a neighboring box
+            stay = false;
+            if (response == "ArrowLeft" && x - 1 >= 0) {
+                typeLetter(Number(x) - 1, y);
+            } else if (response == "ArrowRight" && Number(x) + 1 < tabRows[0].cells.length) {
+                typeLetter(Number(x) + 1, y);
+            } else if (response == "ArrowUp" && y - 1 >= 0) {
+                typeLetter(x, Number(y) - 1);
+            } else if ((response == "ArrowDown") && Number(y) + 1 < tabRows.length) {
+                typeLetter(x, Number(y) + 1);
+            } else {
+                stay = true;
+            }
+        } else {
+            //cancel keyboard menu
+            stay = false;
+        }
 
-        
+        //set background colors
+        if (tabRows[y].cells[x].innerHTML == "") {
+            //make background green (default)
+            tabRows[y].cells[x].style.backgroundColor = "";
+        } else {
+            //make background white
+            tabRows[y].cells[x].style.backgroundColor = "#FFFFFF";
+        }
+
+        if (stay) {   
+            //stay on this box if stay is true          
+            typeLetter(x, y);
+        }
+                
+    }, function(error) {
+        //log error to console in case of fetch error
+        console.error("failed", error);
+    })   
 }
 
-{
-    var squareClicked = false;
-}
-
-
-
+//listen for keypress and feed info to main method
 function keypress() {
     return new Promise((res) => {
         document.addEventListener('keydown', onKeyHandler);
         function onKeyHandler(e) {
-                e.preventDefault();
-                document.removeEventListener('keydown', onKeyHandler);
-                res(e.key);
+            e.preventDefault();
+            document.removeEventListener('keydown', onKeyHandler);
+            res(e.key);
         }
     })
 }
 
+//find start of a word from a click on a letter
 function findWordStart(event, id) {
     let tabRows = document.getElementById("puzzle").rows;
-    let indices = id.split(", ");
+    let indices = id.split(", "); //x, y of square clicked in array
     let x = indices[0];
     let y = indices[1];
 
-    clearSelect();
+    clearSelect(); //clear previously highlighted boxes
 
     if (isEmpty(x, y)) {
-        for (let i = 0; i < tabRows.length; i++) {
-            for (let j = 0; j < tabRows[0].cells.length; j++) {
-                if (tabRows[i].cells[j].style.backgroundColor == "#FFFFFF") {
-                    tabRows[i].cells[j].style.backgroundColor = '#bfd1b0';
-                }
-            }
-        }
-
+        //if square is empty open typing menu
         typeLetter(x, y);
     } else {
+        //find leftmost/uppermost x and y coordinate connected to clicked box
         let startY = findStartY(x, y);
         let startX = findStartX(x, y);
 
-        let intersectX = Number(!isEmpty(Number(x) - 1, y) + !isEmpty(Number(x) + 1, y));
-        let intersectY = Number(!isEmpty(x, Number(y) - 1) + !isEmpty(x, Number(y) + 1));
-        let intersect = intersectX + intersectY;
+        let intersectX = Number(!isEmpty(Number(x) - 1, y) + !isEmpty(Number(x) + 1, y)); //# of squares to left/right filled
+        let intersectY = Number(!isEmpty(x, Number(y) - 1) + !isEmpty(x, Number(y) + 1)); //# of squares to up/down filled
+        let intersect = intersectX + intersectY; //total boxes filled
+
         if ((intersect == 2 && (intersectX != 2 && intersectY != 2)) || intersect >= 3) {
+            //if more than one box checked (not in a row) toggle direction
             if (toggleXY2) {
                 startY = y;
             } else {
@@ -401,84 +408,95 @@ function findWordStart(event, id) {
         }
 
         let word = "";
-        let wordType = 0;
-
-        wordType = findDirection(x, y, startX, startY, intersect);
+        let wordType = findDirection(x, y, startX, startY, intersect); //find word direction
 
         if (wordType == 0) {
+            //if vertical
             word = findWordY(startX, startY);
         } else {
+            //if horizontal
             word = findWordX(startX, startY);
         }
 
-        let letterBank = document.getElementById('letterBank').value + ' ';
+        let letterBank = document.getElementById('letterBank').value + ' '; //store letter bank from input box
         if (letterBank == ' ') {
+            //if none given, use entire alphabet
             letterBank = 'abcdefghijklmnopqrstuvwxyz ';
         }
-        
-        console.log(word.length + ", " + word + ", " + letterBank);
-        handleFiles(word.length, word.toLowerCase(), letterBank.toLowerCase());
+        handleFiles(word.length, word.toLowerCase(), letterBank.toLowerCase()); //send word and letterBank to hint finder
     }
 }
 
+//find the direction of a word given the start coordinates and coordinate of original click
 function findDirection(x, y, startX, startY, intersect) {
-
     if (y!= startY) {
+        //vertical case
         return 0;
     } else if (x != startX){
+        //horizontal case
         return 1;
     } else if (intersect == 3) {
+        //three boxes around start filled
         if (isEmpty(Number(startX) - 1, startY)) {
+            //horizontal case
             return 1;
         } else {
+            //vertical case
             return 0;
         }
     } else if (!isEmpty(Number(startX) + 1, startY) && !isEmpty(startX, Number(startY) + 1)) {
+        //right and lower neighbors filled, pick a direction
         toggleXY = !toggleXY;
         return Number(toggleXY);
     } else if (isEmpty(Number(startX) + 1, startY)) {
+        //right neighbor filled, vertical case
         return 0; 
     } else {
+        //left neighbor filled, horizontal case
         return 1;
-    }
-        
-    
-    
+    } 
 }
 
+//find a word going in the X direction
 function findWordX(x, y) {
     let tabRows = document.getElementById("puzzle").rows;
-    console.log("findWordX " + x + ", " + y);
     if (isEmpty(x, y)) {
+        //base case, box is empty
         return "";
     } else {
+        //recursive case, box has letter
         if (tabRows[y].cells[x].innerHTML == "") {
+            //add space for space box
             tabRows[y].cells[x].innerHTML = " ";
         }
-        tabRows[y].cells[x].style.backgroundColor = "#FFFF9F"
-        return tabRows[y].cells[x].innerHTML + findWordX(Number(x) + 1, y);
+        tabRows[y].cells[x].style.backgroundColor = "#FFFF9F" //highlight box yellow
+        return tabRows[y].cells[x].innerHTML + findWordX(Number(x) + 1, y); //return letter in box plus letter in next box
     }
 }
 
+//find a word going in the Y direction
 function findWordY(x, y) {
     let tabRows = document.getElementById("puzzle").rows;
-    console.log("findWordY " + x + ", " + y);
     if (isEmpty(x, y)) {
+        //base case, box is empty
         return "";
     } else {
+        //recursive case, box has letter
         if (tabRows[y].cells[x].innerHTML == "") {
+            //add space for space box
             tabRows[y].cells[x].innerHTML = " ";
         }
-        tabRows[y].cells[x].style.backgroundColor = "#FFFF9F"
-        return tabRows[y].cells[x].innerHTML + findWordY(x, Number(y) + 1);
+        tabRows[y].cells[x].style.backgroundColor = "#FFFF9F" //highlight box yellow
+        return tabRows[y].cells[x].innerHTML + findWordY(x, Number(y) + 1); //return letter in box plus letter in next box
     }
 }
 
-
+//return whether the box is empty or not
 function isEmpty(x, y) {
     let tabRows = document.getElementById("puzzle").rows;
     if (x == tabRows[0].cells.length || y == tabRows.length || x == -1 || y == -1) {
+        //if x/y out of bounds, is empty
         return true;
     }
-    return (tabRows[y].cells[x].style.backgroundColor == "");
+    return (tabRows[y].cells[x].style.backgroundColor == ""); //return whether background is blank or not
 }
