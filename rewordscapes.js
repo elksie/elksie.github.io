@@ -180,7 +180,7 @@ function makeBank(line) {
 
 //find hint for given word 'line'
 function findHint(line) {
-    
+    console.log("finding hint");
     const output = document.getElementById('answers'); //output field
     const synonymBoolean = Number(document.getElementById('synonym').checked); //is synonym box checked
     const definitionBoolean = Number(document.getElementById('definition').checked); //is definition box checked
@@ -195,26 +195,38 @@ function findHint(line) {
     fetch(url, options)
         .then(res =>  res.json()) //parse result to json
         .then(data => {
+            console.log(line);
+            console.log("fetch success");
             let synString = "";
             let defString = "";
-            
+            console.log(data);
             //generate random number for part of speech
-            let meaningsNum = data[0].meanings.length;
+            let meaningsNum = data[0].meanings.length;         
             let ranMeaning = Math.floor(Math.random() * meaningsNum);
 
             //generate synonym string
             let wordFound = false;
             while (!wordFound) {
+                console.log()
                 let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
                 let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
                 if (data[0].meanings[ranMeaning].synonyms[ranNum] != undefined) {
-                    synString= "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
+                    synString = "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
+                    console.log(synString);
                     wordFound = true;
                 } else {
                     //re-roll meaning if no synonym found
-                    ranMeaning = Math.floor(Math.random() * meaningsNum);
+                    if(meaningsNum == 1) {
+                        wordFound = true;
+                        synString = "<li>No synonyms found.<br>";
+                    } else {
+                        console.log(data[0].meanings[ranMeaning].synonyms[ranNum]);
+                        ranMeaning = Math.floor(Math.random() * meaningsNum);
+                    }
+                    
                 }
             }  
+            console.log("past synonyms loop");
              
             //generate definition string
             wordFound = false;
@@ -226,10 +238,17 @@ function findHint(line) {
                     + "<br>"; //print random definition
                     wordFound = true;
                 } else {
-                    //re-roll meaning if no definition found
-                    ranMeaning = Math.floor(Math.random() * meaningsNum);
+                    if(meaningsNum == 1) {
+                        wordFound = true;
+                        defString = "<li>No synonyms found.<br>";
+                    } else {
+                        //re-roll meaning if no definition found
+                        ranMeaning = Math.floor(Math.random() * meaningsNum);
+                    }
+                    
                 }
             }
+            console.log("past definitions loop");
 
             if(synonymBoolean && !definitionBoolean) { //synonym box checked
                 output.innerHTML += synString;
@@ -378,6 +397,7 @@ function keypress() {
 
 //find start of a word from a click on a letter
 function findWordStart(event, id) {
+    console.log("finding word start");
     let tabRows = document.getElementById("puzzle").rows;
     let indices = id.split(", "); //x, y of square clicked in array
     let x = indices[0];
@@ -429,6 +449,7 @@ function findWordStart(event, id) {
 
 //find the direction of a word given the start coordinates and coordinate of original click
 function findDirection(x, y, startX, startY, intersect) {
+    console.log("finding direction");
     if (y!= startY) {
         //vertical case
         return 0;
