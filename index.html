@@ -111,22 +111,26 @@ Rewordscapes HTML -->
                             </div>
                         </div>
                     </div>
-                        <input type="button" id="growRow" onClick="growRow()" value="Add Row">
-                        <input class="button" type="button" id="growCol" onClick="growCol()" value="Add Column">
-                        <input class="button" type="button" id="shrinkRow" onClick="shrinkRow()" value="Remove Row">
-                        <input class="button" type="button" id="shrinkCol" onClick="shrinkCol()" value="Remove Column">
-                        <input class="button" type="button" id="clearGrid" onClick="clearGrid()" value="Clear Grid">
+
+                    <input type="button" id="growRow" onClick="growRow()" value="Add Row">
+                    <input class="button" type="button" id="growCol" onClick="growCol()" value="Add Column">
+                    <input class="button" type="button" id="shrinkRow" onClick="shrinkRow()" value="Remove Row">
+                    <input class="button" type="button" id="shrinkCol" onClick="shrinkCol()" value="Remove Column">
+                    <input class="button" type="button" id="clearGrid" onClick="clearGrid()" value="Clear Grid">
                        
-                            <h2 style="line-height: 35px">Build-a-Puzzle Instructions:</h2>
-                            <p> Click the "Add Row" or "Add Column" buttons to expand the puzzle grid. Click on a box to start the typing menu. 
-                                Type a letter to add it to the highlighted box, or use the arrow keys to change your selection. Clear boxes with backspace. To exit the typing menu, hit escape.
-                                To narrow down the possible words, you can input the letter bank in the field labelled "Letter Bank." Finally, click on a word to see possible hints.
-                            </p>
-                        
+                    <h2 style="line-height: 35px">Build-a-Puzzle Instructions:</h2>
+                    <p> Click the "Add Row" or "Add Column" buttons to expand the puzzle grid. 
+                        Click on a box to start the typing menu. Type a letter to add it to 
+                        the highlighted box, or use the arrow keys to change your selection. 
+                        Clear boxes with backspace. To exit the typing menu, hit escape.
+                        You can also drag letters from the side letter bank to fill the grid.
+                        To narrow down the possible words, you can input the letter bank in 
+                        the field labelled "Letter Bank." Finally, click on a word to see 
+                        possible hints.
+                    </p>    
                 </div>
-                
-                
             </div>
+
             <div> 
                 <div class="flex-container-vert">
                     <div>
@@ -153,16 +157,33 @@ Rewordscapes HTML -->
                     <p id="answers">Words that fit your description: <br> </p>
                 </div>
             </div>
+          </div>
+          <div class="flex-container">
+            <div class="textbox" style="width:50%">
+                <h2>Text Input Instructions:</h2>
+                <p>
+                    Type the length of word you are trying to find in the "Word
+                    Length" box. If you know any letters in the word, type them
+                    in the "Known Letters" box with a space denoting empty squares.
+                    Type the available letters into the "Letter Bank" box. Select
+                    the type of hint you would like to recieve with the checkboxes. 
+                    Finally, click "Submit" to see all possible answers.
+                </p>
+            </div>
+            <div class="textbox" style="width: 50%">
+                <h2>About the Creator:</h2>
+                <p>
+                    Elisa Reed is a junior at Woodinville High School. Outside of 
+                    coding, her many hobbies include playing copious amounts of 
+                    Wordscapes, so she made a resource for people who want Wordscapes
+                    help without the crushing guilt that accompanies looking up the answers. 
+                    With Rewordscapes, you can get a hint while still feeling like you
+                    figured it out all on your own.
+                </p>
+            </div>
+                
             
           </div>
-          <div class="textbox">
-            
-            <h2>Text Input Instructions:</h2>
-            <p>
-                Type the length of word you are trying to find in the "Word Length" box. If you know any letters in the word, 
-                type them in the "Known Letters" box with a space denoting empty squares. Type the available letters into the 
-                "Letter Bank" box. Select the type of hint you would like to recieve with the checkboxes. Finally, click "Submit" to see all possible answers.
-            </p>
-        </div>
+          
     </body>
 </html>
