@@ -240,7 +240,7 @@ function findHint(line) {
                 } else {
                     if(meaningsNum == 1) {
                         wordFound = true;
-                        defString = "<li>No synonyms found.<br>";
+                        defString = "<li>No definitions found.<br>";
                     } else {
                         //re-roll meaning if no definition found
                         ranMeaning = Math.floor(Math.random() * meaningsNum);
