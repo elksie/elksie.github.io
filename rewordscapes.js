@@ -1,9 +1,4 @@
-/*Elisa Reed
-Advanced Programming Topics
-06/10/2024
-Rewordscapes Script
-
-Main code and behavior handling for rewordscapes website. contains all methods
+/*main code and behavior handling for rewordscapes website. contains all methods
 to find, highlight, and fetch definitions/synonyms for words. controls behavior 
 of html elements in rewordscapes.html.*/
 
@@ -178,16 +173,9 @@ function makeBank(line) {
     return chars;
 }
 
-function noHintFound() {
-    const output = document.getElementById('answers'); //output field
-    console.log("no hints found");
-    output.innerHTML += "<li>No hints found.<br>";
-}
-    
-
 //find hint for given word 'line'
 function findHint(line) {
-    console.log("finding hint");
+    
     const output = document.getElementById('answers'); //output field
     const synonymBoolean = Number(document.getElementById('synonym').checked); //is synonym box checked
     const definitionBoolean = Number(document.getElementById('definition').checked); //is definition box checked
@@ -202,36 +190,42 @@ function findHint(line) {
     fetch(url, options)
         .then(res =>  res.json()) //parse result to json
         .then(data => {
-            console.log(line);
-            console.log("fetch success");
             let synString = "";
             let defString = "";
-            console.log(data);
+            
             //generate random number for part of speech
-            let meaningsNum = data[0].meanings.length;         
+            let meaningsNum = data[0].meanings.length;
             let ranMeaning = Math.floor(Math.random() * meaningsNum);
 
             //generate synonym string
-            let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
-            let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
-            if (data[0].meanings[ranMeaning].synonyms[ranNum] != "undefined") {
-                console.log(data[0].meanings[ranMeaning].synonyms[ranNum]);
-                synString = "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
-            } else {
-                synString = "<li>No synonyms found.<br>";
-            }
-            
-            console.log(synString);
+            let wordFound = false;
+            while (!wordFound) {
+                let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
+                let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
+                if (data[0].meanings[ranMeaning].synonyms[ranNum] != undefined) {
+                    synString= "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
+                    wordFound = true;
+                } else {
+                    //re-roll meaning if no synonym found
+                    ranMeaning = Math.floor(Math.random() * meaningsNum);
+                }
+            }  
              
             //generate definition string
-            let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
-            let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
-            if (data[0].meanings[ranMeaning].definitions[ranNum].definition != "undefined") {
-                console.log(data[0].meanings[ranMeaning].definitions[ranNum].definition);
-                defString = "<li>" + data[0].meanings[ranMeaning].definitions[ranNum].definition + "<br>";
-            } else {
-                defString = "<li>No definitions found.<br>";
+            wordFound = false;
+            while (!wordFound) {
+                let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
+                let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
+                if (data[0].meanings[ranMeaning].definitions[ranNum2] != undefined) {
+                    defString= "<li>" + data[0].meanings[ranMeaning].definitions[ranNum2].definition
+                    + "<br>"; //print random definition
+                    wordFound = true;
+                } else {
+                    //re-roll meaning if no definition found
+                    ranMeaning = Math.floor(Math.random() * meaningsNum);
+                }
             }
+
             if(synonymBoolean && !definitionBoolean) { //synonym box checked
                 output.innerHTML += synString;
             } else if (definitionBoolean && !synonymBoolean) { //definition box checked
@@ -379,7 +373,6 @@ function keypress() {
 
 //find start of a word from a click on a letter
 function findWordStart(event, id) {
-    console.log("finding word start");
     let tabRows = document.getElementById("puzzle").rows;
     let indices = id.split(", "); //x, y of square clicked in array
     let x = indices[0];
@@ -431,7 +424,6 @@ function findWordStart(event, id) {
 
 //find the direction of a word given the start coordinates and coordinate of original click
 function findDirection(x, y, startX, startY, intersect) {
-    console.log("finding direction");
     if (y!= startY) {
         //vertical case
         return 0;
