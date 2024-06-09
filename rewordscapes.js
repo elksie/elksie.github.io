@@ -213,8 +213,9 @@ function findHint(line) {
 
             //generate synonym string
             let wordFound = false;
-            let timeout = setTimeout(noHintFound(), 100000);
+            let timeout = setTimeout(noHintFound(), 10000);
             while (!wordFound) {
+                
                 console.log()
                 let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
                 let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
@@ -225,7 +226,8 @@ function findHint(line) {
                     wordFound = true;
                 } else {
                     //re-roll meaning if no synonym found
-                    if(meaningsNum == 1) {
+                    if(meaningsNum <= 1) {
+                        clearTimeout(timeout);
                         wordFound = true;
                         synString = "<li>No synonyms found.<br>";
                     } else {
@@ -238,7 +240,7 @@ function findHint(line) {
             console.log("past synonyms loop");
              
             //generate definition string
-            let timeout2 = setTimeout(noHintFound(), 5000);
+            let timeout2 = setTimeout(noHintFound(), 10000);
             wordFound = false;
             while (!wordFound) {
                 let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
@@ -250,6 +252,7 @@ function findHint(line) {
                     wordFound = true;
                 } else {
                     if(meaningsNum == 1) {
+                        clearTimeout(timeout2);
                         wordFound = true;
                         defString = "<li>No definitions found.<br>";
                     } else {
