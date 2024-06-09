@@ -178,6 +178,12 @@ function makeBank(line) {
     return chars;
 }
 
+function noHintFound() {
+    console.log("no hints found");
+    output.innerHTML += "<li>No hints found.<br>";
+}
+    
+
 //find hint for given word 'line'
 function findHint(line) {
     console.log("finding hint");
@@ -206,11 +212,13 @@ function findHint(line) {
 
             //generate synonym string
             let wordFound = false;
+            let timeout = setTimeout(noHintFound(), 5000);
             while (!wordFound) {
                 console.log()
                 let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
                 let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
                 if (data[0].meanings[ranMeaning].synonyms[ranNum] != undefined) {
+                    clearTimeout(timeout);
                     synString = "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
                     console.log(synString);
                     wordFound = true;
@@ -229,11 +237,13 @@ function findHint(line) {
             console.log("past synonyms loop");
              
             //generate definition string
+            let timeout2 = setTimeout(noHintFound(), 5000);
             wordFound = false;
             while (!wordFound) {
                 let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
                 let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
                 if (data[0].meanings[ranMeaning].definitions[ranNum2] != undefined) {
+                    clearTImeout(timeout2);
                     defString= "<li>" + data[0].meanings[ranMeaning].definitions[ranNum2].definition
                     + "<br>"; //print random definition
                     wordFound = true;
