@@ -212,56 +212,16 @@ function findHint(line) {
             let ranMeaning = Math.floor(Math.random() * meaningsNum);
 
             //generate synonym string
-            let wordFound = false;
-            let timeout = setTimeout(noHintFound(), 10000);
-            while (!wordFound) {
-                
-                console.log()
-                let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
-                let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
-                if (data[0].meanings[ranMeaning].synonyms[ranNum] != undefined) {
-                    clearTimeout(timeout);
-                    synString = "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
-                    console.log(synString);
-                    wordFound = true;
-                } else {
-                    if (meaningsNum <= 1) {
-                        wordFound = true;
-                        clearTimeout(timeout);
-                    } else {
-                        //re-roll meaning if no synonym found
-                        console.log(data[0].meanings[ranMeaning].synonyms[ranNum]);
-                        ranMeaning = Math.floor(Math.random() * meaningsNum);
-                    }
-                    
-                }
-            }  
-            console.log("past synonyms loop");
+            let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
+            let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
+            synString = "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
+            console.log(synString);
              
             //generate definition string
-            let timeout2 = setTimeout(noHintFound(), 10000);
-            wordFound = false;
-            while (!wordFound) {
-                let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
-                let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
-                if (data[0].meanings[ranMeaning].definitions[ranNum2] != undefined) {
-                    clearTimeout(timeout2);
-                    defString= "<li>" + data[0].meanings[ranMeaning].definitions[ranNum2].definition
-                    + "<br>"; //print random definition
-                    wordFound = true;
-                } else {
-                    if (meaningsNum <= 1) {
-                        wordFound = true;
-                        clearTimeout(timeout);
-                    } else {
-                        //re-roll meaning if no synonym found
-                        console.log(data[0].meanings[ranMeaning].definitions[ranNum]);
-                        ranMeaning = Math.floor(Math.random() * meaningsNum);
-                    }
-                    
-                }
-            }
-            console.log("past definitions loop");
+            let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
+            let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
+            defString= "<li>" + data[0].meanings[ranMeaning].definitions[ranNum2].definition
+            + "<br>"; //print random definition
 
             if(synonymBoolean && !definitionBoolean) { //synonym box checked
                 output.innerHTML += synString;
