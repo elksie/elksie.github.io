@@ -232,7 +232,6 @@ function findHint(line) {
             } else {
                 defString = "<li>No definitions found.<br>";
             }
-
             if(synonymBoolean && !definitionBoolean) { //synonym box checked
                 output.innerHTML += synString;
             } else if (definitionBoolean && !synonymBoolean) { //definition box checked
