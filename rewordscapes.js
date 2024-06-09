@@ -220,14 +220,14 @@ function findHint(line) {
                 let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
                 let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
                 if (data[0].meanings[ranMeaning].synonyms[ranNum] != undefined) {
-                    clearTimeout(timeout);
+                    // clearTimeout(timeout);
                     synString = "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
                     console.log(synString);
                     wordFound = true;
                 } else {
                     //re-roll meaning if no synonym found
                     if(meaningsNum <= 1) {
-                        clearTimeout(timeout);
+                        // clearTimeout(timeout);
                         wordFound = true;
                         synString = "<li>No synonyms found.<br>";
                     } else {
@@ -246,7 +246,7 @@ function findHint(line) {
                 let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
                 let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
                 if (data[0].meanings[ranMeaning].definitions[ranNum2] != undefined) {
-                    clearTimeout(timeout2);
+                    // clearTimeout(timeout2);
                     defString= "<li>" + data[0].meanings[ranMeaning].definitions[ranNum2].definition
                     + "<br>"; //print random definition
                     wordFound = true;
