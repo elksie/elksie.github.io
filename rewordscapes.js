@@ -252,7 +252,7 @@ function findHint(line) {
                     wordFound = true;
                 } else {
                     if(meaningsNum == 1) {
-                        clearTimeout(timeout2);
+                        // clearTimeout(timeout2);
                         wordFound = true;
                         defString = "<li>No definitions found.<br>";
                     } else {
