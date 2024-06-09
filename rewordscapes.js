@@ -226,15 +226,8 @@ function findHint(line) {
                     wordFound = true;
                 } else {
                     //re-roll meaning if no synonym found
-                    if(meaningsNum <= 1) {
-                        clearTimeout(timeout);
-                        wordFound = true;
-                        synString = "<li>No synonyms found.<br>";
-                    } else {
-                        console.log(data[0].meanings[ranMeaning].synonyms[ranNum]);
-                        ranMeaning = Math.floor(Math.random() * meaningsNum);
-                    }
-                    
+                    console.log(data[0].meanings[ranMeaning].synonyms[ranNum]);
+                    ranMeaning = Math.floor(Math.random() * meaningsNum);
                 }
             }  
             console.log("past synonyms loop");
@@ -251,14 +244,8 @@ function findHint(line) {
                     + "<br>"; //print random definition
                     wordFound = true;
                 } else {
-                    if(meaningsNum == 1) {
-                        clearTimeout(timeout2);
-                        wordFound = true;
-                        defString = "<li>No definitions found.<br>";
-                    } else {
                         //re-roll meaning if no definition found
                         ranMeaning = Math.floor(Math.random() * meaningsNum);
-                    }
                     
                 }
             }
