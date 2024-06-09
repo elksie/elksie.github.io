@@ -220,7 +220,7 @@ function findHint(line) {
                 let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
                 let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
                 if (data[0].meanings[ranMeaning].synonyms[ranNum] != undefined) {
-                    // clearTimeout(timeout);
+                    clearTimeout(timeout);
                     synString = "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
                     console.log(synString);
                     wordFound = true;
