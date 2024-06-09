@@ -213,7 +213,7 @@ function findHint(line) {
 
             //generate synonym string
             let wordFound = false;
-            let timeout = setTimeout(noHintFound(), 5000);
+            let timeout = setTimeout(noHintFound(), 100000);
             while (!wordFound) {
                 console.log()
                 let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
