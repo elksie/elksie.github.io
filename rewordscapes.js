@@ -1,4 +1,9 @@
-/*main code and behavior handling for rewordscapes website. contains all methods
+/* Elisa Reed
+Advanced Programming Topics
+06/10/2024
+Rewordscapes
+
+main code and behavior handling for rewordscapes website. contains all methods
 to find, highlight, and fetch definitions/synonyms for words. controls behavior 
 of html elements in rewordscapes.html.*/
 
@@ -198,33 +203,20 @@ function findHint(line) {
             let ranMeaning = Math.floor(Math.random() * meaningsNum);
 
             //generate synonym string
-            let wordFound = false;
-            while (!wordFound) {
                 let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
                 let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
-                if (data[0].meanings[ranMeaning].synonyms[ranNum] != undefined) {
+                if (data[0].meanings[ranMeaning].synonyms[ranNum] != "undefined") {
                     synString= "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
                     wordFound = true;
-                } else {
-                    //re-roll meaning if no synonym found
-                    ranMeaning = Math.floor(Math.random() * meaningsNum);
                 }
-            }  
-             
+            
             //generate definition string
-            wordFound = false;
-            while (!wordFound) {
                 let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
                 let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
-                if (data[0].meanings[ranMeaning].definitions[ranNum2] != undefined) {
+                if (data[0].meanings[ranMeaning].definitions[ranNum2].definition != "undefined") {
                     defString= "<li>" + data[0].meanings[ranMeaning].definitions[ranNum2].definition
                     + "<br>"; //print random definition
-                    wordFound = true;
-                } else {
-                    //re-roll meaning if no definition found
-                    ranMeaning = Math.floor(Math.random() * meaningsNum);
                 }
-            }
 
             if(synonymBoolean && !definitionBoolean) { //synonym box checked
                 output.innerHTML += synString;
