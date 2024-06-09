@@ -216,7 +216,7 @@ function findHint(line) {
             let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
             if (data[0].meanings[ranMeaning].synonyms[ranNum] != "undefined") {
                 console.log(data[0].meanings[ranMeaning].synonyms[ranNum]);
-                synString = "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum]. + "<br>";
+                synString = "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
             } else {
                 synString = "<li>No synonyms found.<br>";
             }
