@@ -203,20 +203,23 @@ function findHint(line) {
             let ranMeaning = Math.floor(Math.random() * meaningsNum);
 
             //generate synonym string
-                let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
-                let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
-                if (length != 0) {
-                    synString= "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
-                    wordFound = true;
-                }
+            let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
+            let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
+            if (length != 0) {
+                synString= "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
+            } else {
+                synString = "<li>No synonyms found.<br>";
+            }
             
             //generate definition string
-                let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
-                let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
-                if (length2 != 0) {
-                    defString= "<li>" + data[0].meanings[ranMeaning].definitions[ranNum2].definition
-                    + "<br>"; //print random definition
-                }
+            let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
+            let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
+            if (length2 != 0) {
+                defString= "<li>" + data[0].meanings[ranMeaning].definitions[ranNum2].definition
+                + "<br>"; //print random definition
+            } else {
+                defString = "<li>No definitions found.<br>";
+            }
 
             if(synonymBoolean && !definitionBoolean) { //synonym box checked
                 output.innerHTML += synString;
