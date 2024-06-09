@@ -228,7 +228,7 @@ function findHint(line) {
             let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
             if (data[0].meanings[ranMeaning].definitions[ranNum].definition != "undefined") {
                 console.log(data[0].meanings[ranMeaning].definitions[ranNum].definition);
-                defString = "<li>" + data[0].meanings[ranMeaning].definitions[ranNum] + "<br>";
+                defString = "<li>" + data[0].meanings[ranMeaning].definitions[ranNum].definition + "<br>";
             } else {
                 defString = "<li>No definitions found.<br>";
             }
