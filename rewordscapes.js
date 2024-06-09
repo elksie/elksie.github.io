@@ -223,6 +223,11 @@ function findHint(line) {
             defString= "<li>" + data[0].meanings[ranMeaning].definitions[ranNum2].definition
             + "<br>"; //print random definition
 
+            if (synString == "<li>undefined<br>") {
+                synstring = "<li>No synonyms found.<br>";
+            }
+            if (defString = "<li>undefined<br>"';
+                defString = "<li>No definitions found.<br>"
             if(synonymBoolean && !definitionBoolean) { //synonym box checked
                 output.innerHTML += synString;
             } else if (definitionBoolean && !synonymBoolean) { //definition box checked
