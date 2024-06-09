@@ -214,7 +214,7 @@ function findHint(line) {
             //generate synonym string
             let length = data[0].meanings[ranMeaning].synonyms.length; //number of synonyms of word
             let ranNum = Math.floor(Math.random() * length); //random number between 0 and length - 1
-            if (data[0].meanings[ranMeaning].synonyms[ranNum] != undefined) {
+            if (data[0].meanings[ranMeaning].synonyms[ranNum] != "undefined") {
                 synString = "<li>" + data[0].meanings[ranMeaning].synonyms[ranNum] + "<br>";
             } else {
                 synString = "<li>No synonyms found.<br>";
@@ -225,7 +225,7 @@ function findHint(line) {
             //generate definition string
             let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
             let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
-            if (data[0].meanings[ranMeaning].synonyms[ranNum] != undefined) {
+            if (data[0].meanings[ranMeaning].synonyms[ranNum] != "undefined") {
                 defString = "<li>" + data[0].meanings[ranMeaning].definitions[ranNum] + "<br>";
             } else {
                 defString = "<li>No definitions found.<br>";
