@@ -246,7 +246,7 @@ function findHint(line) {
                 let length2 = data[0].meanings[ranMeaning].definitions.length; //number of definitions of word
                 let ranNum2 = Math.floor(Math.random() * length2); //random number between 0 and length - 1
                 if (data[0].meanings[ranMeaning].definitions[ranNum2] != undefined) {
-                    clearTImeout(timeout2);
+                    clearTimeout(timeout2);
                     defString= "<li>" + data[0].meanings[ranMeaning].definitions[ranNum2].definition
                     + "<br>"; //print random definition
                     wordFound = true;
