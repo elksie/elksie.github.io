@@ -179,6 +179,7 @@ function makeBank(line) {
 }
 
 function noHintFound() {
+    const output = document.getElementById('answers'); //output field
     console.log("no hints found");
     output.innerHTML += "<li>No hints found.<br>";
 }
