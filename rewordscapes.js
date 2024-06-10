@@ -309,7 +309,7 @@ async function typeLetter(x, y) {
     keypress().then(function(response) { 
         let stay = true;
                
-        if ('abcdefghijklmnopqrstuvwxyx '.includes(response.toLowerCase())) { 
+        if ('abcdefghijklmnopqrstuvwxyz '.includes(response.toLowerCase())) { 
             //if letter, type letter into box
             tabRows[y].cells[x].innerHTML = response.toUpperCase(); 
         } else if (response =="Backspace" || response == "Delete") {
